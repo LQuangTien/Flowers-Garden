@@ -1,4 +1,6 @@
-// 1 o vuong, 2 cai cua so, 1 cai cua chinh, mai nha gom 1 o vuong, 2 tam giac, loi di vo nha
+/**********  
+  HOUSE
+**********/
 Wall = function(){
   // x = 400, y = 300, wall size 300x300
   let x = sizeWidth/3;
@@ -41,15 +43,99 @@ Roof = function(){
   fill(181, 109, 33);
   quad(x1, y1, x2, y2, x3, y3, x4, y4);
 };
+
+/*********
+  Garden
+*********/
+// Grass
 Grass = function(){
   // grass take 40%, sky take 60%
   let x = 0;
-  let y = sizeHeight*3/5;
+  let y = sizeHeight*3/5; 
   let width = sizeWidth;
   let height = sizeHeight*2/5;
+
   fill(0, 255, 0);
   rect(x, y, width, height);
 }
+
+// Flowers
+Flower = function(x, y, height){
+    this.x = x;
+    this.y = y;
+    this.height = height;
+};
+Flower.prototype.growBy = function(amount){
+    this.height += amount;
+};
+// rose
+var Rose = function(x, y, height) {
+    Flower.call(this, x, y, height);
+};
+Rose.prototype = Object.create(Flower.prototype);
+Rose.prototype.draw = function() {
+    noStroke();
+    fill(16, 122, 12);
+    rect(this.x, this.y, 10, -this.height);
+    fill(255, 0, 0);
+    // petals
+    let x1 = this.x-20;
+    let y1 = this.y-this.height-40;
+    let x2 = this.x+30;
+    let y2 = this.y-this.height-40;
+    let x3 = this.x + 15;
+    let y3 = this.y-this.height;
+    let x4 = this.x-5;
+    let y4 = this.y-this.height;
+    quad(x1, y1, x2, y2, x3, y3, x4, y4);
+};
+
+// tulip
+var Tulip = function(x, y, height) {
+    Flower.call(this, x, y, height);
+};
+Tulip.prototype = Object.create(Flower.prototype);
+Tulip.prototype.draw = function() {
+    noStroke();
+    fill(16, 122, 12);
+    rect(this.x, this.y, this.height/10, -this.height);
+    fill(255, 0, 0);
+    // petals
+    ellipse(this.x + this.height*0.05, this.y-this.height, this.height*2/5, this.height*2/5);
+    triangle(this.x - this.height * 0.15, this.y - this.height, 
+            this.x + this.height * 0.2, this.y - this.height,
+            this.x - this.height * 0.2, this.y-this.height*1.3);
+    triangle(this.x - this.height * 0.15, this.y - this.height, 
+            this.x + this.height * 0.25, this.y - this.height,
+            this.x + this.height * 0.05, this.y - this.height*1.4);
+    triangle(this.x - this.height * 0.05, this.y - this.height, 
+            this.x + this.height * 0.25, this.y - this.height,
+            this.x + this.height * 0.3, this.y - this.height*1.35);
+};
+
+// sunflower
+var Sunflower = function(x, y, height) {
+    Flower.call(this, x, y, height);
+};
+Sunflower.prototype = Object.create(Flower.prototype);
+Sunflower.prototype.draw = function() {
+    fill(16, 122, 12);
+    
+    rect(this.x, this.y, this.height/10, -this.height);
+    
+    // petals
+    stroke(0, 0, 0);
+    fill(255, 221, 0);
+    ellipse(this.x-10, this.y-this.height, 20, 18);
+    ellipse(this.x+5, this.y-this.height-15, 20, 18);
+    ellipse(this.x+5, this.y-this.height+15, 20, 18);
+    ellipse(this.x+20, this.y-this.height, 20, 18);
+    fill(20, 20, 20);
+    ellipse(this.x+5, this.y-this.height, 20, 20);
+};
+/********
+  MAIN
+********/
 drawHouse = function(){
   Wall();
   Windows();
@@ -58,9 +144,15 @@ drawHouse = function(){
 }
 drawGarden = function(){
   Grass();
+  tulip.draw();
 }
+createRandomPosition = function(){
+  return [random(0, sizeWidth/3), random(sizeHeight*2/3, sizeHeight), random(0, sizeHeight/6)];
+};
 var sizeWidth = 1200;
-var sizeHeight = 600;
+var sizeHeight = sizeWidth/2; //height = 600
+var tulip = new Tulip(...createRandomPosition() );
+
 setup = function(){
   size(sizeWidth, sizeHeight);
 };
