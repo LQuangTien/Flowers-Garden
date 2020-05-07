@@ -76,17 +76,17 @@ Rose.prototype = Object.create(Flower.prototype);
 Rose.prototype.draw = function() {
     noStroke();
     fill(16, 122, 12);
-    rect(this.x, this.y, 10, -this.height);
-    fill(255, 0, 0);
+    rect(this.x, this.y, this.height*0.1, -this.height);
+    fill(250, 95, 151);
     // petals
-    let x1 = this.x-20;
-    let y1 = this.y-this.height-40;
-    let x2 = this.x+30;
-    let y2 = this.y-this.height-40;
-    let x3 = this.x + 15;
-    let y3 = this.y-this.height;
-    let x4 = this.x-5;
-    let y4 = this.y-this.height;
+    let x1 = this.x - this.height*0.2;
+    let y1 = this.y - this.height*1.4;
+    let x2 = this.x + this.height*0.3;
+    let y2 = this.y - this.height*1.4;
+    let x3 = this.x + this.height*0.15;
+    let y3 = this.y - this.height;
+    let x4 = this.x - this.height*0.05;
+    let y4 = this.y - this.height;
     quad(x1, y1, x2, y2, x3, y3, x4, y4);
 };
 
@@ -121,17 +121,17 @@ Sunflower.prototype = Object.create(Flower.prototype);
 Sunflower.prototype.draw = function() {
     fill(16, 122, 12);
     
-    rect(this.x, this.y, this.height/10, -this.height);
+    rect(this.x, this.y, this.height*0.1, -this.height);
     
     // petals
     stroke(0, 0, 0);
     fill(255, 221, 0);
-    ellipse(this.x-10, this.y-this.height, 20, 18);
-    ellipse(this.x+5, this.y-this.height-15, 20, 18);
-    ellipse(this.x+5, this.y-this.height+15, 20, 18);
-    ellipse(this.x+20, this.y-this.height, 20, 18);
+    ellipse(this.x - this.height*0.1, this.y - this.height, this.height*0.2, this.height*0.18);
+    ellipse(this.x + this.height*0.05, this.y - this.height*1.15, this.height*0.2, this.height*0.18);
+    ellipse(this.x + this.height*0.05, this.y - this.height*0.85, this.height*0.2, this.height*0.18);
+    ellipse(this.x + this.height*0.2, this.y - this.height, this.height*0.2, this.height*0.18);
     fill(20, 20, 20);
-    ellipse(this.x+5, this.y-this.height, 20, 20);
+    ellipse(this.x + this.height*0.05, this.y - this.height, this.height*0.2, this.height*0.2);
 };
 /********
   MAIN
@@ -145,14 +145,16 @@ drawHouse = function(){
 drawGarden = function(){
   Grass();
   tulip.draw();
+  rose.draw();
 }
 createRandomPosition = function(){
-  return [random(0, sizeWidth/3), random(sizeHeight*2/3, sizeHeight), random(0, sizeHeight/6)];
+  // return [x, y, height]
+  return [random(0, sizeWidth/3) , random(sizeHeight*2/3, sizeHeight), random(50, sizeHeight*0.08)];
 };
 var sizeWidth = 1200;
 var sizeHeight = sizeWidth/2; //height = 600
 var tulip = new Tulip(...createRandomPosition() );
-
+var rose = new Rose(...createRandomPosition());
 setup = function(){
   size(sizeWidth, sizeHeight);
 };
