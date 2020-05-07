@@ -41,14 +41,30 @@ Roof = function(){
   fill(181, 109, 33);
   quad(x1, y1, x2, y2, x3, y3, x4, y4);
 };
-const sizeWidth = 1200;
-const sizeHeight = 600;
-setup = function(){
-  size(sizeWidth, sizeHeight);
-};
-draw = function(){
+Grass = function(){
+  // grass take 40%, sky take 60%
+  let x = 0;
+  let y = sizeHeight*3/5;
+  let width = sizeWidth;
+  let height = sizeHeight*2/5;
+  fill(0, 255, 0);
+  rect(x, y, width, height);
+}
+drawHouse = function(){
   Wall();
   Windows();
   Door();
   Roof();
+}
+drawGarden = function(){
+  Grass();
+}
+var sizeWidth = 1200;
+var sizeHeight = 600;
+setup = function(){
+  size(sizeWidth, sizeHeight);
+};
+draw = function(){
+  drawGarden();
+  drawHouse();
 };
