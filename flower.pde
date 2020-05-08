@@ -133,6 +133,59 @@ Sunflower.prototype.draw = function() {
     fill(20, 20, 20);
     ellipse(this.x + this.height*0.05, this.y - this.height, this.height*0.2, this.height*0.2);
 };
+generateFlowers = function(){
+  let flowers = [];
+  // create flowers
+  for(let i = 0; i < 50; i++){
+    let tulip = new Tulip(...createRandomPosition() );
+    let rose = new Rose(...createRandomPosition() );
+    let sunflower = new Sunflower(...createRandomPosition() );
+    flowers.push(tulip, rose, sunflower);
+  };
+  // sorted by position y, in order not to overlap
+  for(let i = 0; i < flowers.length - 1; i++){
+    for(let j = i + 1; j < flowers.length; j++){
+      if(flowers[i].y > flowers[j].y)
+        [flowers[i], flowers[j]] = [flowers[j], flowers[i]];
+    };
+  };
+  return flowers;
+}
+
+createRandomPosition = function(){
+
+  let left = random(0, sizeWidth/3);
+  let right = random(sizeWidth*7/12, sizeWidth);
+
+  let top = random(sizeHeight*2/3, sizeHeight*23/30);
+  let mid = random(sizeHeight*47/60, sizeHeight*53/60);
+  let bot = random(sizeHeight*9/10, sizeHeight);
+
+  let height = random(sizeHeight/12, sizeHeight*2/15);
+  
+  let randomNumber = round(random(0, 5));
+  switch(randomNumber){
+    case 0:
+      return [left, top, height];
+      break;
+    case 1:
+      return [left, mid, height*0.9];
+      break;
+    case 2:
+      return [left, bot, height*0.8];
+      break;
+    case 3:
+      return [right, top, height];
+      break;
+    case 4:
+      return [right, mid, height*0.9];
+      break;
+    case 5:
+      return [right, bot, height*0.8];
+      break;
+  }
+
+};
 /********
   MAIN
 ********/
@@ -144,17 +197,13 @@ drawHouse = function(){
 }
 drawGarden = function(){
   Grass();
-  tulip.draw();
-  rose.draw();
+  for(let i = 0; i < moreFlow.length; i++){
+    moreFlow[i].draw();
+  };
 }
-createRandomPosition = function(){
-  // return [x, y, height]
-  return [random(0, sizeWidth/3) , random(sizeHeight*2/3, sizeHeight), random(50, sizeHeight*0.08)];
-};
 var sizeWidth = 1200;
 var sizeHeight = sizeWidth/2; //height = 600
-var tulip = new Tulip(...createRandomPosition() );
-var rose = new Rose(...createRandomPosition());
+var moreFlow = generateFlowers();
 setup = function(){
   size(sizeWidth, sizeHeight);
 };
