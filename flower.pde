@@ -44,7 +44,7 @@ Cloud.prototype.move = function(){
 
   // if cloud out of screen
   if(this.x > sizeWidth*14/12 || this.x < -sizeWidth/6){
-    // reset y position 
+    // set y position 
     this.y = random(sizeHeight/24, sizeHeight*3/5);
     // set random x position
     let direction = round(random(0,1));
@@ -69,6 +69,7 @@ createCloud = function(numberOfCloud){
   return clouds;
 }
 drawCloud = function(){ 
+  // clouds = createCloud(), global variable
   for(let cloud = 0; cloud < clouds.length; cloud++){
     clouds[cloud].draw();
     clouds[cloud].move();
@@ -297,7 +298,7 @@ createRandomPosition = function(){
   let mid = random(sizeHeight*47/60, sizeHeight*53/60);
   // random(540, 600)
   let bot = random(sizeHeight*9/10, sizeHeight);
-
+  
   let height = random(sizeHeight/12, sizeHeight*2/15);
   
   let randomNumber = round(random(0, 5));
@@ -324,6 +325,7 @@ createRandomPosition = function(){
   }
 };
 drawFlowers = function(){ 
+  //flowerList is global variable
   for(let flower = 0; flower < flowerList.length; flower++){
     flowerList[flower].draw();
   };
@@ -338,10 +340,15 @@ growFlowers = function(){
 ********/
 var sizeWidth = 1200;
 var sizeHeight = sizeWidth/2; //height = 600
+
 // createFlowers(numberOfEachType)
 var flowerList = createFlowers(10);
 // createCloud(numberOfCloud)
 var clouds = createCloud(7);
+
+setup = function(){
+  size(sizeWidth, sizeHeight);
+};
 
 drawSky = function(){
   drawCloud();
@@ -358,23 +365,24 @@ drawGarden = function(){
   drawFlowers();
 }
 
-setup = function(){
-  size(sizeWidth, sizeHeight);
-};
-
 mouseClicked = function(){
   growFlowers();
 }
 draw = function(){
+  //evening
   background(22,111,114);
   drawGarden();
   drawHouse();
+
+  //moring
   if(mouseY < sizeHeight*7/12){
     background(60,215,215);
     drawSun(mouseX, mouseY);
     drawSky();
     drawGarden();
     drawHouse();
+
+    // night
     if(mouseX > sizeWidth/2){
       background(50);
       drawMoon(mouseX, mouseY);
