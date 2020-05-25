@@ -149,6 +149,15 @@ drawGrass = function(){
 
   fill(0, 255, 0);
   rect(x, y, width, height);
+//  fill(0,0,0);
+//  triangle(50, 500, 100, 450, 150, 500);
+  let grassX1 = sizeHeight/12; // 50
+  let grassY1 = sizeHeight; // 600
+  let grassX2 = grassX1*1.4; // 70
+  let grassY2 = sizeHeight*29/30; // 580
+  stroke(0);
+  line(grassX1,grassY1,grassX2,grassY2);
+  line(grassX1,grassY1,grassX1*0.6,grassY2);
 }
 
 // Flowers
